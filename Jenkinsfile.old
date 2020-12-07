@@ -1,0 +1,21 @@
+pipeline {
+  environment {
+    registry = "gbrody/docker-test"
+    registryCredential = ‘dockerhub’
+  }
+  agent any
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/gabriel-brody/jenkins-docker.git'
+      }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+  }
+}
