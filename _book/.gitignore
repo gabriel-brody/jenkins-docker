@@ -3,3 +3,4 @@ _book*
 *.html
 *.html
 *.html
+.DS_Store
