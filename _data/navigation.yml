@@ -1,0 +1,8 @@
+- name: Página Inicial
+  link: /
+- name: Lições de Casa
+  link: /homework.html
+- name: Reuniões
+  link: /reunioes.html
+- name: Horário de aulas
+  link: /horario_aulas.html
