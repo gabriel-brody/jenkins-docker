@@ -11,7 +11,7 @@ pipeline {
         git ([url: 'https://github.com/gabriel-brody/jenkins-docker.git', branch: 'main'])
       }
     }
-    stage('Build gitbook'){
+    stage('Building gitbook'){
       steps{
         sh "gitbook build"
       }
@@ -23,7 +23,7 @@ pipeline {
         }
       }
     }
-    stage('Deploy Image') {
+    stage('Pushing Image') {
       steps{
         script {
           docker.withRegistry( '', registryCredential ) {
@@ -32,17 +32,20 @@ pipeline {
         }
       }
     }
-    stage('Remove container'){
+    stage('Removing container'){
       steps{
-        sh "docker rm -f webserver"
+        catchError {
+          sh "docker rm -f webserver"
+        }
+        echo currentBuild.result
       }
     }
-    stage('Deloy container') {
+    stage('Deloying container') {
       steps{
         sh "docker run -d --name webserver -p 80:80 $registry:latest"
       }
     }
-    stage('Remove Unused docker image') {
+    stage('Removing untagged docker image') {
       steps{
         sh "docker image prune -af"
       }
